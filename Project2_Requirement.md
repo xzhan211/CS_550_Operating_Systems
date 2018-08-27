@@ -92,13 +92,15 @@ depending on how you deal wilt two processes with the same priority value. In ot
 * Test 3: This test case tests demotion and promotion.
 In the test program, we set both RUNNING THRESHOLD and WAITING THRESHOLD to a reasonable value (e.g., 10 and 20 separately).
 Two processes, A and B, are created. We pin process B to the Queue 0. So, we except that:
-(1) A and B should first execute in the round robin queue for a while: **......ABABABABABAB......**
+(1) A and B should first execute in the round robin queue for a while: 
+**......ABABABABABAB......**
 (2) Then A gets demoted to the Queue 1. As B still stays in the Queue 0, B will be executing during this period:
 **......BBBBBBBBBBBB......**
 (3) During this period, A accumulates waiting ticks and gets promoted to Queue 0. So the output should look like:
 **......ABABABABAB......**
 (4) So on and so forth
-Overall, the expected results should be: **......ABABABABABAB......BBBBBBBBBB......ABABABABAB......**
+Overall, the expected results should be: 
+**......ABABABABABAB......BBBBBBBBBB......ABABABABAB......**
 
 
 
