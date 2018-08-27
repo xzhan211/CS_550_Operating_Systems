@@ -74,7 +74,9 @@ Obviously, they do not cover all test scenarios. Thus, first make sure your code
 In the test program, we set the RUNNING THRESHOLD to a large number, so that processes in Queue 0 (round robin) will not get demoted to Queue 1 (priority based).
 Three processes, A, B, and C are created (we use pipe to synchronize them to make sure they start running almost at the same time).
 As these three processes reside in the round robin queue, they should run by turns in a round robin manner. Hence, the expected results should be like:
+
 **......CBACBACBACBACBA......**
+
 Of course, it could be:
 **...ABCABC... or, ...ACBACB..., etc.**
 Notice that, you need to enable the scheduling tracing functionality (see Section 2.3), and the output will be the pid of process A, B, and C.
@@ -86,18 +88,24 @@ In the test program, we set the WAITING THRESHOLD to a large number, so that onc
 — But while C is waiting in Queue 1, its waiting tick value increased faster than A and B’s. So eventually C’s waiting tick will catch up with A and B’s. In this case, A, B, and C are scheduled as if it is round robin.
 — With the above explanation, the expected results after C is demoted into Queue 0 should be:
 **......ABABABABABAB......ABCABCABC......**
+
 or something like: 
 **......AABBAABBAABB......ABCCBAABCCBA......**
+
 depending on how you deal wilt two processes with the same priority value. In other words, you are fine as long as the scheduling pattern of your implementation matches what’s ex- pected.
 * Test 3: This test case tests demotion and promotion.
 In the test program, we set both RUNNING THRESHOLD and WAITING THRESHOLD to a reasonable value (e.g., 10 and 20 separately).
 Two processes, A and B, are created. We pin process B to the Queue 0. So, we except that:
+
 (1) A and B should first execute in the round robin queue for a while: 
 **......ABABABABABAB......**
+
 (2) Then A gets demoted to the Queue 1. As B still stays in the Queue 0, B will be executing during this period:
 **......BBBBBBBBBBBB......**
+
 (3) During this period, A accumulates waiting ticks and gets promoted to Queue 0. So the output should look like:
 **......ABABABABAB......**
+
 (4) So on and so forth
 Overall, the expected results should be: 
 **......ABABABABABAB......BBBBBBBBBB......ABABABABAB......**
